@@ -20,10 +20,12 @@ from tours.views import (
     departure_view,
     tour_view
 )
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main_view),
-    path('departure/<str:departure>', departure_view),
-    path('tour/<int:tour_id>', tour_view),
-]
+    path('departure/<str:departure>', departure_view, name='departure_info'),
+    path('tour/<int:tour_id>', tour_view, name='tour_info'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
