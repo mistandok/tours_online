@@ -29,11 +29,8 @@ def departure_view(request, departure: str):
         departures=departures,
         city_departure=current_departure.city_departure,
         count_tours=len(tours),
-        min_price=min_max_attributes.get('price').min,
-        max_price=min_max_attributes.get('price').max,
-        min_nights=min_max_attributes.get('nights').min,
-        max_nights=min_max_attributes.get('nights').max,
-        tours=tours
+        tours=tours,
+        min_max_attributes=min_max_attributes
     )
 
     return render(request, 'tours/departure.html', context=context)
