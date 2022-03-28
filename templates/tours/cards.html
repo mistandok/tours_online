@@ -8,7 +8,7 @@
             <div class="card-body">
                 <h2 class="h5 card-title">{{tour.title}} {% for _ in tour.star_range %}★{% endfor %}</h2>
                 <p class="card-text">{{tour.description}}</p>
-                <a href="{% url 'tour_info' tour.tour_id %}" class="btn btn-sm btn-primary">Подробнее</a>
+                <a href="{% url 'tour_info' tour.id %}" class="btn btn-sm btn-primary">Подробнее</a>
             </div>
         </div>
     </div>

@@ -18,14 +18,18 @@ from django.urls import path
 from tours.views import (
     main_view,
     departure_view,
-    tour_view
+    tour_view,
+    handler404_view
 )
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main_view),
+    path('', main_view, name='main_info'),
     path('departure/<str:departure>', departure_view, name='departure_info'),
     path('tour/<int:tour_id>', tour_view, name='tour_info'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler404 = handler404_view
