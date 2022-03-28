@@ -13,7 +13,7 @@ def is_departure_exists(departure: str) -> bool:
     :param departure: departure id
     :return: True if exists, else False
     """
-    return bool(DEPARTURE_CONTROLLER.get({'id': departure}))
+    return bool(get_departures_data({'id': departure}))
 
 
 def is_tour_exists(tour_id: int) -> bool:
@@ -22,7 +22,7 @@ def is_tour_exists(tour_id: int) -> bool:
     :param tour_id: tour id
     :return: True if exists, else False
     """
-    return bool(TOUR_CONTROLLER.get({'id': tour_id}))
+    return bool(get_tours_data({'id': tour_id}))
 
 
 def get_min_max_attr_for_tours(tours: List['Tour'], *min_max_attributes: str) -> Dict[str, AttrMinMax]:
