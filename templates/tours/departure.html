@@ -2,7 +2,7 @@
 
 {% block content %}
 <main class="container mt-3">
-    <h1 class="display-5 mt-4">Летим из {{ city_departure }}</h1>
+    <h1 class="display-5 mt-4">Летим {{ city_departure }}</h1>
     <p class="mb-4">Найдено {{ count_tours }} туров, от {{ min_price }} до {{ max_price }} и от {{ min_nights }} ночей до {{ max_nights }} ночей</p>
     <!-- CARDS -->
     {% include 'tours/cards.html' %}

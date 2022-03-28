@@ -2,9 +2,9 @@
 
 __author__ = 'Artikov A.K'
 
-from typing import List
+from typing import List, Dict
 import data
-from .tour_services import TOUR_CONTROLLER, DEPARTURE_CONTROLLER
+from .tour_services import TOUR_CONTROLLER, DEPARTURE_CONTROLLER, AttrMinMax
 
 
 def is_departure_exists(departure: str) -> bool:
@@ -25,21 +25,15 @@ def is_tour_exists(tour_id: int) -> bool:
     return bool(TOUR_CONTROLLER.get({'id': tour_id}))
 
 
-def get_departure_card(departure_id: str, min_max_attributes: List[str] = None) -> tuple:
+def get_min_max_attr_for_tours(tours: List['Tour'], *min_max_attributes: str) -> Dict[str, AttrMinMax]:
     """
-    This function collects data about departure card
-    :param departure_id: departure id
-    :param min_max_attributes: attribute names for min\max search
-    :return: list of tours, min\max values for attributes
+    The function returns min and max attributes value for sended tours.
+    :param tours: list of tours
+    :param min_max_attributes: name of attributes
+    :return:
     """
-    tours = get_tours_cards({'departure': departure_id})
-
-    if min_max_attributes:
-        result_min_max_attributes = TOUR_CONTROLLER.get_min_max_attr_for_data(tours, min_max_attributes)
-    else:
-        result_min_max_attributes = None
-
-    return tours, result_min_max_attributes
+    result_min_max_attributes = TOUR_CONTROLLER.get_min_max_attr_for_data(tours, *min_max_attributes)
+    return result_min_max_attributes
 
 
 def get_main_data() -> dict:
@@ -64,7 +58,7 @@ def get_departures_data(departures_filter: list = None) -> List['Departure']:
     return DEPARTURE_CONTROLLER.get(departures_filter)
 
 
-def get_tours_cards(tours_filter: dict = None) -> List['Tour']:
+def get_tours_data(tours_filter: dict = None) -> List['Tour']:
     """
     The function returns cards with info about tour.
     :return: tour list

@@ -36,7 +36,7 @@ class BaseController(ABC):
             return self._get_by_filter(data_filter)
 
     @staticmethod
-    def get_min_max_attr_for_data(list_of_data: List[BaseModel], attr_names: List[str]) -> Optional[Dict[str, AttrMinMax]]:
+    def get_min_max_attr_for_data(list_of_data: List[BaseModel], *attr_names: str) -> Optional[Dict[str, AttrMinMax]]:
         result = {attr_name: AttrMinMax() for attr_name in attr_names}
 
         for current_data in list_of_data:
@@ -77,9 +77,6 @@ class TourController(BaseController):
     """
     The class allows manipulating with tours data.
     """
-    def __init__(self, tour_data: dict):
-        super().__init__(tour_data)
-
     def _get_base_model(self) -> Type[BaseModel]:
         return Tour
 
@@ -88,9 +85,6 @@ class DepartureController(BaseController):
     """
     The class allows manipulating with departures data.
     """
-    def __init__(self, departure_data: dict):
-        super().__init__(departure_data)
-
     def _get_base_model(self) -> Type[BaseModel]:
         return Departure
 

@@ -3,7 +3,7 @@ from django.shortcuts import render
 import data
 from .services.api import (
     is_tour_exists, is_departure_exists, get_main_data,
-    get_tours_cards, get_departures_data, get_departure_card
+    get_tours_data, get_departures_data, get_min_max_attr_for_tours
 )
 
 
@@ -11,7 +11,7 @@ def main_view(request):
     context = dict(
         departures=get_departures_data(),
         main_info=get_main_data(),
-        tours=get_tours_cards()
+        tours=get_tours_data()
     )
     return render(request, 'tours/index.html', context=context)
 
@@ -22,10 +22,8 @@ def departure_view(request, departure: str):
 
     departures = get_departures_data()
     current_departure = get_departures_data({'id': departure})[-1]
-    tours, min_max_attributes = get_departure_card(
-        departure,
-        ['price', 'nights']
-    )
+    tours = get_tours_data({'departure': departure})
+    min_max_attributes = get_min_max_attr_for_tours(tours, 'price', 'nights')
 
     context = dict(
         departures=departures,
@@ -44,7 +42,18 @@ def departure_view(request, departure: str):
 def tour_view(request, tour_id: int):
     if not is_tour_exists(tour_id):
         return handler404_view(request)
-    return render(request, 'tours/tour.html')
+
+    departures = get_departures_data()
+    tour = get_tours_data({'id': tour_id})[-1]
+    departure = get_departures_data({'id': tour.departure})[-1]
+
+    context = dict(
+        departures=departures,
+        tour=tour,
+        departure=departure
+    )
+
+    return render(request, 'tours/tour.html', context=context)
 
 
 def handler404_view(request, *args, **kwargs):

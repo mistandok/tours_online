@@ -17,9 +17,18 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 {% for departure in departures %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'departure_info' departure.id %}">{{ departure.city_departure }}</a>
-                </li>
+                {% url 'departure_info' departure.id as departure_url %}
+                {% url 'tour_info' tour.id as tour_url %}
+                {% if request.path == tour_url %}
+                    {% url 'departure_info' tour.departure as departure_url_for_tour %}
+                    <li class="nav-item {% if departure_url_for_tour == departure_url %}active{% endif %}">
+                        <a class="nav-link" href="{{ departure_url }}">{{ departure.city_departure }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item {% if request.path == departure_url%}active{% endif %}">
+                        <a class="nav-link" href="{{ departure_url }}">{{ departure.city_departure }}</a>
+                    </li>
+                {%  endif %}
                 {% endfor %}
             </ul>
         </div>
