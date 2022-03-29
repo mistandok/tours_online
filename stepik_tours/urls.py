@@ -29,7 +29,7 @@ urlpatterns = [
     path('', main_view, name='main_info'),
     path('departure/<str:departure>', departure_view, name='departure_info'),
     path('tour/<int:tour_id>', tour_view, name='tour_info'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 handler404 = handler404_view

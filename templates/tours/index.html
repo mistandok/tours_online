@@ -2,9 +2,10 @@
 
 {% block content %}
 <main class="container mt-3">
+    {%  load static %}
     <section
             class="jumbotron text-center mt-4"
-            style="background: url('/media/pictures/main_back.png'); background-position: center center">
+            style="background: url({% static 'main_back.png' %}); background-position: center">
         <h1 class="display-4">{{main_info.title}}</h1>
         <p class="lead">{{main_info.subtitle}}</p>
         <p class="mt-5 w-50 mx-auto">{{main_info.description}}</p>

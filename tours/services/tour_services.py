@@ -1,7 +1,7 @@
 """
 This module describes work with Tour
 """
-
+import random
 from typing import List, Dict, Union, Optional, Type
 from abc import ABC, abstractmethod
 import data
@@ -28,12 +28,16 @@ class BaseController(ABC):
 
     def get(self, data_filter: dict = None) -> Union[List[Tour], None]:
         if data_filter is None:
-            return self._data.values()
+            result = self._data.values()
+        elif 'random' in data_filter:
+            result = self._get_by_random(data_filter.get('random'))
         elif 'id' in data_filter:
-            result_data = self._get_by_id(data_filter.get('id'))
-            return [result_data] if result_data else []
+            result = self._get_by_id(data_filter.get('id'))
+            result = [result] if result else []
         else:
-            return self._get_by_filter(data_filter)
+            result = self._get_by_filter(data_filter)
+
+        return result
 
     @staticmethod
     def get_min_max_attr_for_data(list_of_data: List[BaseModel], *attr_names: str) -> Optional[Dict[str, AttrMinMax]]:
@@ -47,17 +51,21 @@ class BaseController(ABC):
 
         return result
 
+    @classmethod
+    def _is_need_postprocessing(cls, data_filter):
+        return any(current_filter in data_filter for current_filter in cls.postprocessing_filters)
+
     @abstractmethod
     def _get_base_model(self) -> Type[BaseModel]:
         pass
 
-    def _get_init_data(self, dict_data: dict) -> Dict[int, Tour]:
+    def _get_init_data(self, dict_data: dict) -> Dict[int, BaseModel]:
         result = dict()
         for data_id, current_data in dict_data.items():
             result[data_id] = self._base_model.construct_from_dict(dict_data={**{'id': data_id}, **current_data})
         return result
 
-    def _get_by_filter(self, data_filter: dict) -> List[Tour]:
+    def _get_by_filter(self, data_filter: dict) -> List[BaseModel]:
         specification = None
         for name, value in data_filter.items():
             if not specification:
@@ -71,6 +79,11 @@ class BaseController(ABC):
 
     def _get_by_id(self, data_id: int) -> BaseModel:
         return self._data.get(data_id)
+
+    def _get_by_random(self, random_count: int) -> List[BaseModel]:
+        allow_data_keys = self._data.keys()
+        random_data_keys = set(random.sample(allow_data_keys, random_count))
+        return [key_data for key, key_data in self._data.items() if key in random_data_keys]
 
 
 class TourController(BaseController):

@@ -11,7 +11,7 @@ def main_view(request):
     context = dict(
         departures=get_departures_data(),
         main_info=get_main_data(),
-        tours=get_tours_data()
+        tours=get_tours_data({'random': 6})
     )
     return render(request, 'tours/index.html', context=context)
 
