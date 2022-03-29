@@ -51,10 +51,6 @@ class BaseController(ABC):
 
         return result
 
-    @classmethod
-    def _is_need_postprocessing(cls, data_filter):
-        return any(current_filter in data_filter for current_filter in cls.postprocessing_filters)
-
     @abstractmethod
     def _get_base_model(self) -> Type[BaseModel]:
         pass
