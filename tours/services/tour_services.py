@@ -1,5 +1,5 @@
 """
-This module describes work with Tour
+This module describes work with tours
 """
 
 
