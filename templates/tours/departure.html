@@ -1,0 +1,13 @@
+{% extends 'tours/base.html' %}
+
+{% block content %}
+<main class="container mt-3">
+    <h1 class="display-5 mt-4">Летим {{ city_departure }}</h1>
+    <p class="mb-4">Найдено {{ count_tours }} туров, от {{ min_max_attributes.price.min }} до
+        {{ min_max_attributes.price.max }} и от {{ min_max_attributes.nights.min }} ночей до
+        {{ min_max_attributes.nights.max }} ночей
+    </p>
+    <!-- CARDS -->
+    {% include 'tours/cards.html' %}
+</main>
+{% endblock %}
