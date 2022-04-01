@@ -58,4 +58,3 @@ class Departure(BaseModel):
     """
     id: str
     city_departure: str
-
