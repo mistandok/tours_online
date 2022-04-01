@@ -3,14 +3,22 @@
 __author__ = 'Artikov A.K.'
 
 from dataclasses import dataclass
-from typing import Union
+
 import dacite
 
 
-@dataclass()
+@dataclass
 class BaseModel:
+    """
+    Base data model
+    """
     @classmethod
     def construct_from_dict(cls, dict_data: dict) -> 'BaseModel':
+        """
+        Create object for data model from dict
+        :param dict_data:
+        :return:
+        """
         data_model = dacite.from_dict(cls, dict_data)
         return data_model
 
@@ -20,6 +28,9 @@ class BaseModel:
 
 @dataclass
 class Tour(BaseModel):
+    """
+    Tour data model
+    """
     id: int
     title: str
     description: str
@@ -42,6 +53,9 @@ class Tour(BaseModel):
 
 @dataclass
 class Departure(BaseModel):
+    """
+    Departure model
+    """
     id: str
     city_departure: str
 

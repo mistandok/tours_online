@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-import data
 from .services.api import (
     is_tour_exists, is_departure_exists, get_main_data,
     get_tours_data, get_departures_data, get_min_max_attr_for_tours
